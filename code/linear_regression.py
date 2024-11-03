@@ -21,17 +21,14 @@ def scale_features(mileage, price):
     price_mean = np.sum(price) / len(price)
     mileage_deviation = (np.sum((mileage - mileage_mean)**2) / len(mileage))**(1/2)
     print("the milleage deviation is", mileage_deviation)
-    price_deviation = (np.sum(price - price_mean) / len(price))**(1/2)
+    price_deviation = (np.sum((price - price_mean)**2) / len(price))**(1/2)
     mileage_normalazied = (mileage - mileage_mean) / mileage_deviation
     print(len(mileage_normalazied))
-    # print("milleage normalized", mileage_normalazied)
     price_normalazied = (price - price_mean) / price_deviation
-    # print("len of price_normalized", len(price_normalazied))
-    # print("type of price normalized is", type(price_normalazied))
-    # print("price normalized is")
-    # print(price_normalazied)
-    # print("milleage normalized type is ")
-    # print(mileage_normalazied.dtype)
+    # i need to make  sure this rounding is not hurting the result badly
+    with open('meanStd.csv', 'w', newline= '') as csvfile:
+        mean_std = csv.writer(csvfile)
+        mean_std.writerow([price_mean, price_deviation])
     return np.round(mileage_normalazied), np.round(price_normalazied)
 
 def calculate_loss(estimate_price, price):
@@ -39,10 +36,6 @@ def calculate_loss(estimate_price, price):
     return loss
 
 def estimate_price(mileage, theta0, theta1):
-    # estimated_prices = []
-    # for el in mileage:
-    #     estimated_prices.append(theta1 * el + theta0)
-    # return np.array(estimated_prices)
     e_p = (mileage * theta1) + theta0
     e_p = np.round(e_p, 4)
     print(e_p)
@@ -51,7 +44,7 @@ def estimate_price(mileage, theta0, theta1):
 def claculate_thetas(mileage, price):
     theta0 = 0
     theta1 = 0
-    max_iteration = 1000
+    max_iteration = 500
     nb_iteration = 0
     learning_rate = 0.1
     while(nb_iteration < max_iteration):
@@ -65,7 +58,7 @@ def claculate_thetas(mileage, price):
         if loss < 10**(-5):
             break
         theta0 = (learning_rate /len(price)) * np.sum(estimated_prices - price)
-        theta1 = (learning_rate /len(price)) * np.sum((estimated_prices - price) * price)
+        theta1 = (learning_rate /len(price)) * np.sum((estimated_prices - price) * mileage)
         nb_iteration += 1
     return theta0, theta1
 
@@ -82,4 +75,8 @@ if __name__ == "__main__":
     # print(mileage_normalized)
     # print(price_normalized)
     theta0, theta1 = claculate_thetas(mileage_normalized, price_normalized)
+    with open('thetas.csv', 'w', newline= '') as csvfile:
+        thetas = csv.writer(csvfile)
+        thetas.writerow([theta0, theta1])
+
     print("value of theta0 and theta1 are:", theta0, theta1)
