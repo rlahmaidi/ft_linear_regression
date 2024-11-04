@@ -1,10 +1,18 @@
+import matplotlib.pyplot as plt
 import numpy as np
 
+#plot 1:
+x = np.array([0, 1, 2, 3])
+y = np.array([3, 8, 1, 10])
 
-arr = np.array([1,1,3])
-arr1 = np.array([0,2,1])
-arr2 = np.array([2,2,1])
-print((arr - arr1) * arr2)
+plt.subplot(2, 2, 1)
+plt.plot(x,y)
 
-6331.83
-Standard Deviation (std of price): 1319.65 ​
+#plot 2:
+x = np.array([0, 1, 2, 3])
+y = np.array([10, 20, 30, 40])
+
+plt.subplot(2, 2, 2)
+plt.plot(x,y)
+
+plt.show()
