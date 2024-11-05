@@ -31,5 +31,5 @@ if __name__ == "__main__":
             sys.exit()
     theta0, theta1 = get_thetas("thetas.csv")
     est_price = estimat_price(mileage, theta0, theta1)
-    print("the estimated price of a car with"+
-          str(mileage) + "mileage is:" + str(est_price))
+    print("the estimated price of a car with "+
+          str(mileage) + " mileage is: " + str(est_price))

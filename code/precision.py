@@ -20,5 +20,5 @@ if __name__ == "__main__":
     mileage = data[1:,0:1]
     price = data[1:, 1:2]
     r2 = calculate_precision(mileage, price)
-    print("the precision of our model calculated using"+
+    print("the precision of our model calculated "+
           "using R-squared score is:", r2)

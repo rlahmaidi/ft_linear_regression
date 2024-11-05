@@ -40,9 +40,7 @@ def claculate_thetas(mileage, price):
     while(nb_iteration < max_iteration):
 
         estimated_prices = estimate_price(mileage, theta0, theta1)
-        # print("estimate prices returned is", estimated_prices)
         loss = calculate_loss(estimated_prices, price)
-        # print(estimated_prices)
         if loss < 10**(-5):
             break
         #caluculate gradient
