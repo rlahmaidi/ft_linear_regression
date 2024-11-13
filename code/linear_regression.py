@@ -22,7 +22,8 @@ def scale_features(mileage, price):
     return mileage_normalazied, price_normalazied
 
 def calculate_loss(estimate_price, price):
-    loss = np.sum(abs(estimate_price - price)) / len(price)
+    """Calculate Mean Squared Error loss"""
+    loss = np.sum((estimate_price - price) ** 2) / len(price)
     return loss
 
 def estimate_price(mileage, theta0, theta1):
